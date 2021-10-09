@@ -1,0 +1,34 @@
+=============== Feb 18, 2019 (+03) ===============
+02:18:32.061399 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+02:18:32.086963 db@open opening
+02:18:32.087450 version@stat F·[] S·0B[] Sc·[]
+02:18:32.089571 db@janitor F·2 G·0
+02:18:32.089606 db@open done T·2.618346ms
+=============== Feb 18, 2019 (+03) ===============
+02:18:47.954028 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+02:18:47.954191 version@stat F·[] S·0B[] Sc·[]
+02:18:47.954206 db@open opening
+02:18:47.954259 journal@recovery F·1
+02:18:47.957106 journal@recovery recovering @1
+02:18:47.960460 memdb@flush created L0@2 N·14 S·931B "!<x..+up,v5":"\xea5\xec..\xe3\x8d\x18,v3"
+02:18:47.965033 version@stat F·[1] S·931B[931B] Sc·[0.25]
+02:18:47.992715 db@janitor F·3 G·0
+02:18:47.992801 db@open done T·38.579768ms
+02:21:45.863705 db@close closing
+02:21:45.863763 db@close done T·57.484µs
+=============== Feb 18, 2019 (+03) ===============
+03:20:20.287225 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+03:20:20.310091 version@stat F·[1] S·931B[931B] Sc·[0.25]
+03:20:20.310129 db@open opening
+03:20:20.310227 journal@recovery F·1
+03:20:20.315842 journal@recovery recovering @3
+03:20:20.363198 memdb@flush created L0@5 N·102 S·12KiB "\t\x97\x12..#Q\xa6,v96":"\xf5\xd7D..\xa0\x18T,v110"
+03:20:20.366384 version@stat F·[2] S·13KiB[13KiB] Sc·[0.50]
+03:20:20.380935 db@janitor F·4 G·0
+03:20:20.381006 db@open done T·70.855871ms
+03:22:58.790659 table@compaction L0·2 -> L1·0 S·13KiB Q·120
+03:23:17.893774 table@build created L1@8 N·85 S·11KiB "\t\x97\x12..#Q\xa6,v96":"\xf5\xd7D..\xa0\x18T,v110"
+03:23:17.893888 version@stat F·[0 1] S·11KiB[0B 11KiB] Sc·[0.00 0.00]
+03:23:17.896246 table@compaction committed F-1 S-1KiB Ke·0 D·31 T·19.105469313s
+03:23:17.896332 table@remove removed @5
+03:23:17.896364 table@remove removed @2

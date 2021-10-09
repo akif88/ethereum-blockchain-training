@@ -1,0 +1,20 @@
+=============== Feb 9, 2019 (+03) ===============
+05:01:04.658207 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+05:01:04.671906 db@open opening
+05:01:04.676102 version@stat F·[] S·0B[] Sc·[]
+05:01:04.679629 db@janitor F·2 G·0
+05:01:04.679670 db@open done T·7.726019ms
+05:01:31.674865 db@close closing
+05:01:31.674987 db@close done T·120.228µs
+=============== Feb 9, 2019 (+03) ===============
+05:02:40.362360 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+05:02:40.362579 version@stat F·[] S·0B[] Sc·[]
+05:02:40.362588 db@open opening
+05:02:40.362626 journal@recovery F·1
+05:02:40.365373 journal@recovery recovering @1
+05:02:40.539171 memdb@flush created L0@2 N·21260 S·1MiB "\x00\x00\xae..\x82\x88\x11,v9389":"\xff\xfc\x94..\xa5\x05\xa1,v9518"
+05:02:40.542934 version@stat F·[1] S·1MiB[1MiB] Sc·[0.25]
+05:02:40.551658 db@janitor F·3 G·0
+05:02:40.551712 db@open done T·189.112112ms
+05:06:14.269497 db@close closing
+05:06:14.269617 db@close done T·117.087µs

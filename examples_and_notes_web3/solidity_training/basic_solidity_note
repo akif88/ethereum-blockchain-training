@@ -1,0 +1,308 @@
+// Addresses - holds 20 byte/160 bit Ethereum addresses
+// No arithmetic allowed
+address public owner;
+
+
+// Types of accounts:
+// Contract account: address set on create (func of creator address, num transactions sent)
+// External Account: (person/external entity): address created from public key
+
+
+
+// Add 'public' field to indicate publicly/externally accessible
+// a getter is automatically created, but NOT a setter
+
+
+
+// All addresses can be sent ether
+owner.transfer(SOME_BALANCE); // fails and reverts on failure
+// Can also do a lower level .send call, which returns a false if it failed
+if (owner.send) {} // REMEMBER: wrap(sarmak) send in 'if', as contract addresses have
+// functions executed on send and these can fail
+// Also, make sure to deduct(azaltmak) balances BEFORE attempting a send, as there is a risk of a recursive
+// call that can drain(akıtmak, tahliye etmek) the contract
+
+
+// Can check balance(*****bakiye********)
+owner.balance; // the balance of the owner (user or contract)
+
+
+
+// Dictionaries (any type to any other type)
+mapping (string => uint) public balances;
+balances["charles"] = 1;
+console.log(balances["ada"]); // is 0, all non-set key values return zeroes
+// 'public' allows following from another contract
+contractName.balances("charles"); // returns 1
+// 'public' created a getter (but not setter) like the following:
+function balances(string _account) returns (uint balance) {
+    return balances[_account];
+}
+
+
+
+// To delete
+delete balances["John"];
+delete balances; // sets all elements to 0
+
+
+
+// Structs
+struct Bank {
+    address owner;
+    uint balance;
+}
+Bank b = Bank({
+    owner: msg.sender,
+    balance: 5
+});
+// or
+Bank c = Bank(msg.sender, 5);
+
+c.balance = 5; // set to new value
+delete b;
+// sets to initial value, set all variables in struct to 0, except mappings
+
+
+
+
+
+// ** msg - Current message received by the contract ** **
+msg.sender; // address of sender
+msg.value; // amount of ether provided to this contract in wei, the function should be marked "payable"
+msg.data; // bytes, complete call data
+msg.gas; // remaining gas
+
+
+// ** tx - This transaction **
+tx.origin; // address of sender of the transaction
+tx.gasprice; // gas price of the transaction
+
+
+
+
+
+// ** block - Information about current block **
+now; // current time (approximately), alias for block.timestamp (uses Unix time)
+// Note that this can be manipulated by miners, so use carefully
+
+
+
+
+
+block.number; // current block number
+block.difficulty; // current block difficulty
+block.blockhash(1); // returns bytes32, only works for most recent 256 blocks
+block.gasLimit();
+
+
+
+
+
+// Functions can return many arguments, and by specifying returned arguments
+// name don't need to explicitly return
+function increment(uint x, uint y) returns (uint x, uint y) {
+    x += 1;
+    y += 1;
+}
+// Call previous functon
+uint (a,b) = increment(1,1);
+
+
+
+// 'constant' (alias for 'view')
+// indicates that function does not/cannot change persistent(kalıcı) vars
+// Constant function execute locally, not on blockchain
+uint y = 1;
+
+function increment(uint x) constant returns (uint x) {
+    x += 1;
+    y += 1; // this line would fail
+    // y is a state variable, and can't be changed in a constant function
+}
+
+
+
+
+
+
+// 'Function Visibility specifiers'
+// These can be placed where 'constant' is, including:
+// public - visible externally and internally (default for function)
+// external - only visible externally (including a call made with this.)
+// private - only visible in the current contract
+// internal - only visible in current contract, and those deriving from it
+
+
+
+
+
+// All functions that receive ether must be marked 'payable'
+function depositEther() public payable {
+    balances[msg.sender] += msg.value;
+}
+
+
+
+
+
+//Events
+// Events are notify external parties; easy to search and
+// access events from outside blockchain (with lightweight clients)
+// typically declare after contract parameters
+
+// Typically, capitalized - and add Log in front to be explicit and prevent confusion
+// with a function call
+
+// Declare
+event LogSent(address indexed from, address indexed to, uint amount);
+ // note capital first letter
+
+// Call
+LogSent(from, to, amount);
+
+
+||
+||  ****** external party(web3)  
+vv
+vv
+
+
+// For an external party (a contract or external entity), to watch using
+// the Web3 Javascript library:
+Coin.LogSent().watch({}, '', function(error, result) {
+    if (!error) {
+        console.log("Coin transfer: " + result.args.amount +
+            " coins were sent from " + result.args.from +
+            " to " + result.args.to + ".");
+        console.log("Balances now:\n" +
+            "Sender: " + Coin.balances.call(result.args.from) +
+            "Receiver: " + Coin.balances.call(result.args.to));
+    }
+}
+
+
+
+
+
+
+
+*****medrec******
+// C. Modifiers
+// Modifiers validate inputs to functions such as minimal balance or user auth;
+// similar to guard clause in other languages
+
+// '_' (underscore) often included as last line in body, and indicates
+// function being called should be placed there
+modifier onlyAfter(uint _time) { require (now >= _time); _; }
+modifier onlyOwner { require(msg.sender == owner) _; }
+// commonly used with state machines
+modifier onlyIfStateA (State currState) { require(currState == State.A) _; }
+
+// Append right after function declaration
+function changeOwner(newOwner)
+onlyAfter(someTime)
+onlyOwner()
+onlyIfState(State.A)
+{
+    owner = newOwner;
+}
+
+// underscore can be included before end of body,
+// but explicitly returning will skip, so use carefully
+modifier checkValue(uint amount) {
+    _;
+    if (msg.value > amount) {
+        uint amountToRefund = amount - msg.value;
+        msg.sender.transfer(amountToRefund);
+    }
+}
+
+
+
+// Enums
+enum State { Created, Locked, Inactive }; // often used for state machine
+State public state; // Declare variable from enum
+state = State.Created;
+// enums can be explicitly converted to ints
+uint createdState = uint(State.Created); //  0
+
+// Data locations: Memory vs. storage vs. calldata - all complex types (arrays,
+// structs) have a data location
+// 'memory' does not persist, 'storage' does
+// Default is 'storage' for local and state variables; 'memory' for func params
+// stack holds small local variables
+
+// for most types, can explicitly set which data location to use
+
+
+
+
+
+
+
+
+
+
+// Inheritance
+
+// Order matters, last inherited contract (i.e., 'def') can override parts of
+// previously inherited contracts
+contract MyContract is abc, def("a custom argument to def") {
+
+// Override function
+    function z() {
+        if (msg.sender == owner) {
+            def.z(); // call overridden function from def
+            super.z(); // call immediate parent overridden function
+        }
+    }
+}
+
+
+
+
+// Import
+
+import "filename";
+import "github.com/ethereum/dapp-bin/library/iterable_mapping.sol";
+
+
+
+
+
+
+// OTHER NATIVE FUNCTIONS
+
+// Currency units
+// Currency is defined using wei, smallest unit of Ether
+uint minAmount = 1 wei;
+uint a = 1 finney; // 1 ether == 1000 finney
+// Other units, see: http://ether.fund/tool/converter
+
+// Time units
+1 == 1 second
+1 minutes == 60 seconds
+
+// Can multiply a variable times unit, as units are not stored in a variable
+uint x = 5;
+(x * 1 days); // 5 days
+
+// Careful about leap seconds/years with equality statements for time
+// (instead, prefer greater than/less than)
+
+// Cryptography
+// All strings passed are concatenated before hash action
+sha3("ab", "cd");
+ripemd160("abc");
+sha256("def");
+
+
+
+
+
+
+
+
+
+

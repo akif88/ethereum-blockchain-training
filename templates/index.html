@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<h3 lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Healthcare</title>
+</head>
+{% if name %}
+    <h1>{{ name }} Page</h1>
+    <ul>
+        {% for item in menu %}
+            <li><a href="#">{{ item }}</a></li>
+        {% endfor %}
+    </ul>
+    <h3><a href="/login">Back Login Page</a></h3>
+{% else %}
+    <h1>Log in</h1>
+{% endif %}

@@ -1,0 +1,4 @@
+
+eth.coinbase
+admin.nodeInfo
+exit()

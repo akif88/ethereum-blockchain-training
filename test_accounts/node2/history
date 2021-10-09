@@ -1,0 +1,15 @@
+admin.nodeInfo
+admin.peers
+admin.nodeInfo
+admin.peers
+miner.start()
+miner.stop()
+miner.stop();
+admin.peers
+admin.nodeInfo
+admin.peers
+admin.getNodeInfo
+admin.getNodeInfo()
+admin.nodeInfo
+admin.addPeer("enode://fe9fa5aaa5262d43a83d67d856219b716b8551b90d7c3aec4dc5ee7ab9fbc0d224c5afc02a83aa67ac85592bd50db5cce921b1ddcba72d6a5c8096c053f3fbfb@127.0.0.1:30317")
+admin.nodeInfo
